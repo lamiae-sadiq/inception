@@ -13,6 +13,6 @@ RUN apk add --update --no-cache\
 	&& sed -i 's|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|g' /etc/php81/php-fpm.d/www.conf
 
 WORKDIR /var/www/wordpress
-RUN  chmod +x ./tools/install_packages.sh
-COPY ./tools/install_packages.sh /
-CMD [ "sh", "install_packages.sh" ]
+COPY conf/wdp.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY ./tools/install_packages.sh /var/www/wordpress/script.sh 
+CMD [ "sh", "script.sh" ]

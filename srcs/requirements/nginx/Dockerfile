@@ -1,6 +1,6 @@
 FROM alpine:3.18
 
-MAINTAINER LUMLUM
+MAINTAINER WEIRDO
 
 RUN apk update && apk upgrade && apk add nginx
 RUN apk add vim
