@@ -1,6 +1,8 @@
 FROM alpine:3.18.6
 
 ADD --chmod=744 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp-cli
+RUN apk add wget
+
 RUN apk add --update --no-cache\
 	curl\
 	php81\
@@ -13,6 +15,6 @@ RUN apk add --update --no-cache\
 	&& sed -i 's|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|g' /etc/php81/php-fpm.d/www.conf
 
 WORKDIR /var/www/wordpress
-COPY conf/wdp.conf /etc/php/7.3/fpm/pool.d/www.conf
-COPY ./tools/install_packages.sh /var/www/wordpress/script.sh 
+COPY conf/wdp.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY ./tools/script.sh /var/www/wordpress/script.sh 
 CMD [ "sh", "script.sh" ]
