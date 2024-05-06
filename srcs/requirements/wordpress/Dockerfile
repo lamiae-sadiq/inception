@@ -17,4 +17,4 @@ RUN apk add --update --no-cache\
 WORKDIR /var/www/wordpress
 COPY conf/wdp.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY ./tools/script.sh /var/www/wordpress/script.sh 
-CMD [ "sh", "script.sh" ]
+ENTRYPOINT [ "sh", "script.sh" ]

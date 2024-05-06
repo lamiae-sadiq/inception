@@ -11,4 +11,5 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/ngin
 RUN mkdir -p /var/run/nginx
 COPY conf/nginx.conf /etc/nginx/http.d/default.conf
 COPY conf/index.html /home/index.html
+EXPOSE 443
 CMD [ "nginx", "-g", "daemon off;" ]
