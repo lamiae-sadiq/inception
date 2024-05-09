@@ -12,4 +12,4 @@ chown www-data:www-data /var/www/wordpress/wp-content/uploads -R
 
 mkdir -p /run/php/
 
-php-fp -F
+php-fpm -F

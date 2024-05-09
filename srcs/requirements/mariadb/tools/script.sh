@@ -23,4 +23,4 @@ mysql -e "FLUSH PRIVILEGES;"
 mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
 
 #starting mysql server in safe mode
-exec mysqld_safe
+mariadbd
