@@ -1,20 +1,17 @@
-FROM alpine:3.18.6
+FROM debian:11
 
-ADD --chmod=744 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
-RUN apk add wget
+RUN apt update -y 
+RUN apt upgrade -y 
+RUN apt install curl -y 
+RUN apt install php-fpm -y
+RUN apt install php-mysql -y
+RUN apt install php-cli -y
+RUN apt install wget -y
 
-RUN apk add --update --no-cache\
-	curl\
-	php81\
-	php81-phar\
-	php81-fpm\
-	php81-mysqli\
-	php81-iconv\
-	php81-redis\
-	php81-ctype\
-	&& sed -i 's|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|g' /etc/php81/php-fpm.d/www.conf
+COPY ./conf/wp-config.php /var/www/wordpress
 
-WORKDIR /var/www/wordpress
-COPY conf/wdp.conf /etc/php/7.4/fpm/pool.d/www.conf
-COPY ./tools/script.sh /var/www/wordpress/script.sh 
+COPY ./tools/script.sh /
+
+RUN chmod +x /script.sh
+
 ENTRYPOINT [ "sh", "script.sh" ]

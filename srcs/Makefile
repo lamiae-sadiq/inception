@@ -14,17 +14,21 @@ WP_PATH=/home/lsadiq/data/wordpress
 DB_PATH=/home/lsadiq/data/mariadb
 DATA_PATH=/home/lsadiq/data
 DOCKER_COMPOSE_FILE=docker-compose.yml
-DOCKER_COMPOSE_CMD=docker compose --file $(DOCKER_COMPOSE_FILE)
+DOCKER_COMPOSE_CMD=docker compose -f $(DOCKER_COMPOSE_FILE)
 SYSTEM_PRUNE=docker system prune -af
 
 all:
-	echo "lsadiq.42.fr 127.0.0.1" >> /etc/hosts
-	sudo mkdir -p $(WP_PATH) $(DB_PATH)
-	$(DOCKER_COMPOSE_CMD) up -d
+	mkdir -p $(WP_PATH) $(DB_PATH)
+	$(DOCKER_COMPOSE_CMD) up -d --build
 clean:
 	$(DOCKER_COMPOSE_CMD) down
+
+host :
+	echo "lsadiq.42.fr 127.0.0.1" >> /etc/hosts
+
 fclean:
 	$(DOCKER_COMPOSE_CMD) down -v --rmi all
 	$(SYSTEM_PRUNE)
-	sudo rm -rf $(DATA_PATH)
+	rm -rf $(DATA_PATH)
+
 re: fclean all

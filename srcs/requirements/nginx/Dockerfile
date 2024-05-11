@@ -1,15 +1,22 @@
-FROM alpine:3.18
 
-MAINTAINER WEIRDO
+FROM debian:11
 
-RUN apk update && apk upgrade && apk add nginx
-RUN apk add vim
-RUN apk add curl
-RUN mkdir -p /etc/nginx/ssl
-RUN apk add openssl
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=login.42.fr/UID=login"
+# Update package repositories and install necessary packages
+RUN apt-get update && \
+    apt-get install -y nginx vim curl openssl && \
+    rm -rf /var/lib/apt/lists/*
+
+# Generate SSL certificate
+RUN mkdir -p /etc/nginx/ssl && \
+    openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=login.42.fr/UID=login"
+
+# Create necessary directories and copy configuration files
 RUN mkdir -p /var/run/nginx
-COPY conf/nginx.conf /etc/nginx/http.d/default.conf
-COPY conf/index.html /home/index.html
+COPY conf/default /etc/nginx/sites-available/default
+COPY conf/index.html /usr/share/nginx/html/index.html
+
+# Expose port 443
 EXPOSE 443
-CMD [ "nginx", "-g", "daemon off;" ]
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]

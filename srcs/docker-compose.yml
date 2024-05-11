@@ -1,67 +1,70 @@
-# version: "3.3"
+# version: "3.0"
 
 networks:
   inception:
     driver: bridge
-    name: inception
 
-volumes:
-  wordpress:
-    driver: local
-    name: wordpress
-    driver_opts:
-      type: none
-      device: /home/lsadiq/data/wordpress
-      o: bind
-  mariadb:
-    driver: local
-    name: mariadb
-    driver_opts:
-      type: none
-      device: /home/lsadiq/data/mariadb
-      o: bind
+# volumes:
+#   wordpress:
+#     driver: local
+#     name: wordpress
+#     driver_opts:
+#       type: non
+#       device: /home/lsadiq/data/wordpress
+#       o: bind
+#   mariadb:
+#     driver: local
+#     name: mariadb
+#     driver_opts:
+#       type: non
+#       device: /home/lsadiq/data/mariadb
+#       o: bind
 
 
 services:
-  mariadb:
-    pull_policy: never
-    image: mariadb
-    container_name: mariadb
-    volumes:
-      - mariadb:/var/lib/mysql
-    # restart: always
-    build: ./requirements/mariadb
-    env_file:
-      - .env
-    networks:
-      - inception
+  # mariadb:
+  #   build: ./requirements/mariadb
+  #   pull_policy: never
+  #   image: mariadb
+  #   container_name: mariadb
+  #   volumes:
+  #     - mariadb:/var/lib/mysql
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - inception
+  #   ports:
+  #     - "3306:3306"
 
   nginx:
+    build: ./requirements/nginx
     pull_policy: never
     image: nginx
     container_name: nginx
     volumes:
     - wordpress:/var/www/wordpress
-    # restart: always
-    build: ./requirements/nginx
+    restart: always
     ports:
       - "443:443"
     networks:
       - inception
-    depends_on:
-      - wordpress
+    # depends_on:
+    #   - wordpress
 
-  wordpress:
-    pull_policy: never
-    image: wordpress
-    container_name: wordpress
-    volumes:
-      - wordpress:/var/www/html
-    # restart: always
-    build: ./requirements/wordpress
-    env_file:
-      - .env
-    networks:
-      - inception
-    depends_on:
-      - mariadb
+  # wordpress:
+  #   pull_policy: never
+  #   image: wordpress
+  #   container_name: wordpress
+  #   volumes:
+  #     - wordpress:/var/www/html
+  #   # restart: always
+  #   build: ./requirements/wordpress
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - inception
+  #   depends_on:
+  #     - mariadb
+  #   ports:
+  #     - "9000:9000"
