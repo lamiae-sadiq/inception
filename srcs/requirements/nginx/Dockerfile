@@ -12,8 +12,10 @@ RUN mkdir -p /etc/nginx/ssl && \
 
 # Create necessary directories and copy configuration files
 RUN mkdir -p /var/run/nginx
+RUN mkdir -p /var/www/wordpress
 COPY conf/default /etc/nginx/sites-available/default
-COPY conf/index.html /usr/share/nginx/html/index.html
+# COPY conf/index.php /var/www/wordpress/index.php
+# RUN chmod +x /var/www
 
 # Expose port 443
 EXPOSE 443
