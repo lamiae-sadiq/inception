@@ -9,10 +9,10 @@ mysqld_safe &
 
 
 
-# until mariadb -u root -h localhost --password="${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;"; do
-#   echo "Database is not up yet. Waiting..."
-#   sleep 0.2 # wait for 5 seconds before check again
-# done
+until mariadb -u root -h localhost --password="${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;"; do
+  echo "Database is not up yet. Waiting..."
+  sleep 0.2 # wait for 5 seconds before check again
+done
 
 
 
