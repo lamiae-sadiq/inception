@@ -15,7 +15,7 @@ wp config create --allow-root  --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --d
 
 wp core install --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL  --allow-root --url=$DOMAIN_NAME
 
-wp user create --user=$WP_USER --user-email=$WP_USER_EMAIL --role=author --user_pass=$WP_USER_PWD --allow-root
+# wp user create --user=$WP_USER --user-email=$WP_USER_EMAIL --role=author --user_pass=$WP_USER_PWD --allow-root
 
 chown -R www-data:www-data /var/www/wordpress
 

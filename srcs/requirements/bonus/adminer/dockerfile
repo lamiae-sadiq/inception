@@ -1,0 +1,4 @@
+FROM debian:11
+
+RUN apt-get update -y && apt-get install php7.4 curl php-mysql -y
+

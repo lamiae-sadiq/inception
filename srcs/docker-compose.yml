@@ -20,7 +20,6 @@ volumes:
       device: /home/lsadiq/data/mariadb
       o: bind
 
-
 services:
   mariadb:
     build: ./requirements/mariadb
@@ -58,7 +57,7 @@ services:
     container_name: wordpress
     volumes:
       - wordpress:/var/www/wordpress
-    # restart: always
+    restart: always
     build: ./requirements/wordpress
     env_file:
       - .env
@@ -68,3 +67,23 @@ services:
       - mariadb
     ports:
       - "9000:9000"
+  monitor:
+    container_name: monitorix
+    build: ./requirements/bonus/monitorix
+    env_file:
+      - .env
+    image: monitorix
+    restart: unless-stopped
+    networks:
+      - inception
+    ports:
+      - 8080:8080
+  redis:
+    container_name: redis
+    build: ./requirements/bonus/redis
+    image: redis
+    restart: always
+    networks:
+      - inception
+    ports:
+      - "6379:6379"
