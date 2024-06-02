@@ -8,8 +8,5 @@ COPY /tools/maria.sh /maria.sh
 
 RUN chmod +x /maria.sh
 
-EXPOSE 3306
-
 # Start MariaDB server by default
-# ENTRYPOINT ["bash"]
 ENTRYPOINT ["bash","maria.sh"]

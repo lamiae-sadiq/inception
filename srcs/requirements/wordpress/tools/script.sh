@@ -4,7 +4,7 @@ cd /var/www/wordpress
 
 until mariadb -u "$MYSQL_USER" -h mariadb --password="${MYSQL_PASSWORD}" -e "show databases;"; do
   echo "Database is not up yet. Waiting..."
-  sleep 0.2 # wait for 5 seconds before check again
+  sleep 0.2 
 done
 sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 0.0.0.0:9000|g' /etc/php/7.4/fpm/pool.d/www.conf
 
@@ -21,4 +21,4 @@ chown -R www-data:www-data /var/www/wordpress
 
 mkdir -p /run/php/
 
-php-fpm7.4 -F -R
+exec php-fpm7.4 -F -R
