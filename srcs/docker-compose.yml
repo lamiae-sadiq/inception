@@ -1,4 +1,3 @@
-# version: "3.0"
 
 networks:
   inception:
@@ -33,8 +32,6 @@ services:
       - .env
     networks:
       - inception
-    ports:
-      - "3306:3306"
 
   nginx:
     build: ./requirements/nginx
@@ -65,5 +62,3 @@ services:
       - inception
     depends_on:
       - mariadb
-    ports:
-      - "9000:9000"
